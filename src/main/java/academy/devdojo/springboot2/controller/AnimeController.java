@@ -4,14 +4,12 @@ import academy.devdojo.springboot2.domain.*;
 import academy.devdojo.springboot2.requests.*;
 import academy.devdojo.springboot2.service.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.*;
 
 
 /**
@@ -24,9 +22,6 @@ public class AnimeController {
   
   private final AnimeService service;
   
-  /**
-   * @return
-   */
   @GetMapping
   public ResponseEntity<List<Anime>> list() {
     return ResponseEntity.ok(service.findAll());
@@ -35,6 +30,12 @@ public class AnimeController {
   @GetMapping(path = "/{id}")
   public ResponseEntity<Anime> findById(@PathVariable Long id) {
     return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id));
+  }
+  
+  
+  @GetMapping(path = "/find")
+  public ResponseEntity<List<Anime>> findById(@RequestParam String name) {
+    return ResponseEntity.ok(service.findByName(name));
   }
   
   @PostMapping
