@@ -19,7 +19,7 @@ public class RestExceptionHandler {
                                                           .timestamp(LocalDateTime.now())
                                                           .status(HttpStatus.BAD_REQUEST.value())
                                                           .details(exception.getMessage())
-    N                                                      .developerMessage(exception.getClass().getName())
+                                                          .developerMessage(exception.getClass().getName())
                                                           .build(), HttpStatus.BAD_REQUEST);
   }
   

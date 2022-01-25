@@ -7,6 +7,7 @@ import academy.devdojo.springboot2.repository.*;
 import academy.devdojo.springboot2.requests.*;
 import lombok.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import java.util.*;
 
@@ -31,6 +32,7 @@ public class AnimeService {
     return repository.findById(id).orElseThrow(() -> new BadRequestException("Anime Not Found"));
   }
   
+  @Transactional
   public Anime save(AnimePostRequestBody animePostRequest) {
     return repository.save(new AnimeMapperImpl().toAnime(animePostRequest));
   }
