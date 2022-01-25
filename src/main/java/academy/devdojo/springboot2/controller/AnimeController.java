@@ -7,6 +7,7 @@ import lombok.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.*;
 import java.util.*;
 
 import static org.springframework.http.HttpStatus.*;
@@ -40,7 +41,7 @@ public class AnimeController {
   
   @PostMapping
   @ResponseStatus(value = CREATED)
-  public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody anime) {
+  public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody anime) {
     return new ResponseEntity<>(service.save(anime), CREATED);
   }
   
