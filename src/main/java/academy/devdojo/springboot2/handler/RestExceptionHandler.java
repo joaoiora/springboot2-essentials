@@ -3,10 +3,12 @@ package academy.devdojo.springboot2.handler;
 import academy.devdojo.springboot2.exception.*;
 import lombok.extern.log4j.*;
 import org.springframework.http.*;
+import org.springframework.validation.*;
 import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.*;
+import java.util.stream.*;
 
 /**
  * @author Joao Iora
@@ -28,13 +30,17 @@ public class RestExceptionHandler {
   
   @ExceptionHandler(value = MethodArgumentNotValidException.class)
   public ResponseEntity<ValidationExceptionDetails> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-    log.info("Fields {}", exception.getBindingResult().getFieldError().getField());
+    var errors = exception.getBindingResult().getFieldErrors();
+    var fields = errors.stream().map(FieldError::getField).collect(Collectors.joining(","));
+    var messages = errors.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining(","));
     return new ResponseEntity<>(ValidationExceptionDetails.builder()
-                                                          .title("Bad Request Exception. Check the API documentation.")
+                                                          .title("Bad Request Exception. Invalid fields.")
                                                           .timestamp(LocalDateTime.now())
                                                           .status(HttpStatus.BAD_REQUEST.value())
-                                                          .details(exception.getMessage())
+                                                          .details("Check the field(s) error.")
                                                           .developerMessage(exception.getClass().getName())
+                                                          .fields(fields)
+                                                          .fieldsMessage(messages)
                                                           .build(), HttpStatus.BAD_REQUEST);
   }
   
