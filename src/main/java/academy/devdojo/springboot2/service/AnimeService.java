@@ -6,6 +6,7 @@ import academy.devdojo.springboot2.mapper.*;
 import academy.devdojo.springboot2.repository.*;
 import academy.devdojo.springboot2.requests.*;
 import lombok.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
@@ -20,8 +21,8 @@ public class AnimeService {
   
   private final AnimeRepository repository;
   
-  public List<Anime> findAll() {
-    return repository.findAll();
+  public Page<Anime> findAll(Pageable pageable) {
+    return repository.findAll(pageable);
   }
   
   public List<Anime> findByName(String name) {

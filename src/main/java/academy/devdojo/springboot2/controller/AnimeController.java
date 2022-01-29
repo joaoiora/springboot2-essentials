@@ -4,6 +4,7 @@ import academy.devdojo.springboot2.domain.*;
 import academy.devdojo.springboot2.requests.*;
 import academy.devdojo.springboot2.service.*;
 import lombok.*;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,8 @@ public class AnimeController {
   private final AnimeService service;
   
   @GetMapping
-  public ResponseEntity<List<Anime>> list() {
-    return ResponseEntity.ok(service.findAll());
+  public ResponseEntity<Page<Anime>> list(Pageable pageable) {
+    return ResponseEntity.ok(service.findAll(pageable));
   }
   
   @GetMapping(path = "/{id}")
