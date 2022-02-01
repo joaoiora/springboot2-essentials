@@ -2,7 +2,11 @@ package academy.devdojo.springboot2.client;
 
 import academy.devdojo.springboot2.domain.*;
 import lombok.extern.log4j.*;
+import org.springframework.core.*;
+import org.springframework.http.*;
 import org.springframework.web.client.*;
+
+import java.util.*;
 
 /**
  * @author Joao Iora
@@ -20,6 +24,13 @@ public class SpringClient {
     var anotherAnime = anotherEntity.getBody();
     log.info("Another Anime Response Entity: " + anotherEntity);
     log.info("Another Anime Entity: " + anotherAnime);
+    
+    var animes = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null,
+                                             new ParameterizedTypeReference<List<Anime>>() {
+      
+                                             });
+    log.info(animes);
+    
   }
   
 }

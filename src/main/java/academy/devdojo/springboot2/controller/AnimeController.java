@@ -29,6 +29,11 @@ public class AnimeController {
     return ResponseEntity.ok(service.findAll(pageable));
   }
   
+  @GetMapping(path = "/all")
+  public ResponseEntity<List<Anime>> listAll(){
+    return ResponseEntity.ok(service.listAllNonPageable());
+  }
+  
   @GetMapping(path = "/{id}")
   public ResponseEntity<Anime> findById(@PathVariable Long id) {
     return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id));
