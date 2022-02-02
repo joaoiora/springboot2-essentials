@@ -31,6 +31,15 @@ public class SpringClient {
                                              });
     log.info(animes);
     
+    var kingdom = Anime.builder().name("Kingdom").build();
+    var savedKingdom = new RestTemplate().postForObject("http://localhost:8080/animes/", kingdom, Anime.class);
+    log.info("Saved new Anime: {}", savedKingdom);
+    
+    var samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
+    var savedSamurai = new RestTemplate().exchange("http://localhost:8080/animes/", HttpMethod.POST,
+                                                   new HttpEntity<>(samuraiChamploo),
+                                                   Anime.class);
+    log.info("Saved another new Anime: {}", savedSamurai);
   }
   
 }
