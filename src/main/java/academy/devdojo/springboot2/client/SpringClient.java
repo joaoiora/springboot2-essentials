@@ -37,9 +37,15 @@ public class SpringClient {
     
     var samuraiChamploo = Anime.builder().name("Samurai Champloo").build();
     var savedSamurai = new RestTemplate().exchange("http://localhost:8080/animes/", HttpMethod.POST,
-                                                   new HttpEntity<>(samuraiChamploo),
+                                                   new HttpEntity<>(samuraiChamploo, newJsonHeader()),
                                                    Anime.class);
     log.info("Saved another new Anime: {}", savedSamurai);
+  }
+  
+  private static HttpHeaders newJsonHeader(){
+    final HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    return headers;
   }
   
 }
