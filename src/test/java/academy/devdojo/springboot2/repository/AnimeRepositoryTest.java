@@ -1,6 +1,7 @@
 package academy.devdojo.springboot2.repository;
 
 import academy.devdojo.springboot2.domain.*;
+import academy.devdojo.springboot2.util.*;
 import lombok.extern.log4j.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
@@ -31,7 +32,7 @@ class AnimeRepositoryTest {
   @Test
   @DisplayName(value = "Testing the save operation on a Anime")
   void testSuccessfullySavingAnAnime() {
-    var anime = newAnime();
+    var anime = AnimeCreator.newAnimeToBeSaved();
     var savedAnime = repository.save(anime);
     assertNotNull(savedAnime);
     assertNotNull(savedAnime.getId());
@@ -41,7 +42,7 @@ class AnimeRepositoryTest {
   @Test
   @DisplayName(value = "Testing the update operation on a already persisted Anime")
   void testSuccessfullyUpdatingAnAnime() {
-    var anime = newAnime();
+    var anime = AnimeCreator.newAnimeToBeSaved();
     var savedAnime = repository.save(anime);
     savedAnime.setName("Hajiume no Ippo 2");
     var updatedAnime = repository.save(savedAnime);
@@ -53,7 +54,7 @@ class AnimeRepositoryTest {
   @Test
   @DisplayName(value = "Testing the delete operation on a already persisted Anime")
   void testSuccessfullyDeleteAnAnime() {
-    var anime = newAnime();
+    var anime = AnimeCreator.newAnimeToBeSaved();
     var savedAnime = repository.save(anime);
     repository.delete(savedAnime);
     var loadedAnime = repository.findById(savedAnime.getId());
@@ -63,7 +64,7 @@ class AnimeRepositoryTest {
   @Test
   @DisplayName(value = "Test returning a list of Animes when finding by name")
   void testFindAnimesByName() {
-    var anime = newAnime();
+    var anime = AnimeCreator.newAnimeToBeSaved();
     var savedAnime = repository.save(anime);
     String name = savedAnime.getName();
     List<Anime> animes = repository.findByName(name);
@@ -85,12 +86,8 @@ class AnimeRepositoryTest {
     var anime = new Anime();
     var expectedExceptionMessage = "The Anime Name must not be empty";
     org.assertj.core.api.Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
-      .isThrownBy(() -> repository.save(anime))
-      .withMessageContaining(expectedExceptionMessage);
-  }
-  
-  private Anime newAnime() {
-    return Anime.builder().name("Hajime no Ippo").build();
+                                   .isThrownBy(() -> repository.save(anime))
+                                   .withMessageContaining(expectedExceptionMessage);
   }
   
 }
