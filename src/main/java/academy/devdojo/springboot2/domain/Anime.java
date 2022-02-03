@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.*;
 
 /**
@@ -25,6 +26,7 @@ public class Anime {
   private Long id;
   
   @Column(nullable = false)
+  @NotEmpty(message = "The Anime Name must not be empty")
   private String name;
   
   @Override
