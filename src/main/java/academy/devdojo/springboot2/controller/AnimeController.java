@@ -25,13 +25,13 @@ public class AnimeController {
   private final AnimeService service;
   
   @GetMapping
-  public ResponseEntity<Page<Anime>> list(Pageable pageable) {
+  public ResponseEntity<Page<Anime>> findAll(Pageable pageable) {
     return ResponseEntity.ok(service.findAll(pageable));
   }
   
   @GetMapping(path = "/all")
-  public ResponseEntity<List<Anime>> listAll(){
-    return ResponseEntity.ok(service.listAllNonPageable());
+  public ResponseEntity<List<Anime>> findAllNonPageable(){
+    return ResponseEntity.ok(service.findAllNonPageable());
   }
   
   @GetMapping(path = "/{id}")
@@ -41,7 +41,7 @@ public class AnimeController {
   
   
   @GetMapping(path = "/find")
-  public ResponseEntity<List<Anime>> findById(@RequestParam String name) {
+  public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
     return ResponseEntity.ok(service.findByName(name));
   }
   

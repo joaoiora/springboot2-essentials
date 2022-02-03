@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
  * @author Joao Iora
  */
 @Data
+@Builder
 public class AnimePostRequestBody {
   
   @NotEmpty(message = "The Anime's Name must not be empty")
